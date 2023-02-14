@@ -40,11 +40,6 @@
         <mat-form-field appearance="fill">
             <mat-label>gender</mat-label>
             <input matInput readonly>
-            <!-- <mat-radio-group id="gender" name="gender" aria-label="Select an option" required
-                    [(ngModel)]="userService.currentUser.gender">
-                    <mat-radio-button value="1">male</mat-radio-button>
-                    <mat-radio-button value="2">female</mat-radio-button>
-                </mat-radio-group> -->
             <mat-radio-group id="gender" name="gender" aria-label="Select an option" required
                 [(ngModel)]="userService.currentUser.gender" #gender="ngModel">
                 <mat-radio-button value="1">male</mat-radio-button>
@@ -102,9 +97,5 @@
 
         <input type="submit" value="save" [disabled]="!childForm.valid&&!userForm.valid" />
     </form>
-    <!-- <div>
-        <button class="centre btn mc" [disabled]="!userForm.valid"
-            (click)="downloadExcel()">Download-form</button>
-    </div> -->
     <input type="submit" class="centre btn mc" value="save" [disabled]="!userForm.valid" />
 </form>
