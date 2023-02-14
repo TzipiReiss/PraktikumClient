@@ -1,0 +1,110 @@
+<form (ngSubmit)="save(); userForm.reset();" #userForm="ngForm">
+    <p>
+        <mat-form-field appearance="fill">
+            <mat-label>First-name</mat-label>
+            <input matInput id="fName" type="text" name="fName" required [(ngModel)]="userService.currentUser.firstName"
+                #fName="ngModel">
+            <mat-hint *ngIf="fName.touched&&fName.errors" style="color: red;">required</mat-hint>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="fill">
+            <mat-label>Last-name</mat-label>
+            <input matInput id="lName" type="text" name="lName" required [(ngModel)]="userService.currentUser.lastName"
+                #lName="ngModel">
+            <mat-hint *ngIf="lName.touched&&lName.errors" style="color: red;">required</mat-hint>
+        </mat-form-field>
+    </p>
+
+    <p>
+        <mat-form-field appearance="fill">
+            <mat-label>ID-number</mat-label>
+            <input matInput id="IdNumber" type="text" name="IdNumber" minlength="9" maxlength="9" required
+                [(ngModel)]="userService.currentUser.idNumber" #id="ngModel">
+            <mat-hint *ngIf="id.touched&&id.errors?.minlength" style="color: red;">ID number must be a 9
+                digits.</mat-hint>
+            <mat-hint *ngIf="id.touched&&id.errors&&id.errors?.required" style="color: red;">required</mat-hint>
+        </mat-form-field>
+    </p>
+
+    <p>
+        <mat-form-field appearance="fill">
+            <mat-label>Date-of-birth</mat-label>
+            <input matInput id="dateOfBirth" type="date" name="dateOfBirth" required
+                [(ngModel)]="userService.currentUser.dateOfBirth" #d="ngModel" max="{{today|date:'dd-mm-yy'}}">
+            <mat-hint *ngIf="d.touched&&d.errors?.required" style="color: red;">required</mat-hint>
+            <mat-hint *ngIf="d.touched&&d.errors?.max" style="color: red;">Date is not valid</mat-hint>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="fill">
+            <mat-label>gender</mat-label>
+            <input matInput readonly>
+            <!-- <mat-radio-group id="gender" name="gender" aria-label="Select an option" required
+                    [(ngModel)]="userService.currentUser.gender">
+                    <mat-radio-button value="1">male</mat-radio-button>
+                    <mat-radio-button value="2">female</mat-radio-button>
+                </mat-radio-group> -->
+            <mat-radio-group id="gender" name="gender" aria-label="Select an option" required
+                [(ngModel)]="userService.currentUser.gender" #gender="ngModel">
+                <mat-radio-button value="1">male</mat-radio-button>
+                <mat-radio-button value="2">female</mat-radio-button>
+            </mat-radio-group>
+            <mat-hint *ngIf="gender.touched&&gender.errors?.required" style="color: red;">required</mat-hint>
+        </mat-form-field>
+    </p>
+    <p>
+        <mat-form-field appearance="fill">
+            <mat-label>HMO</mat-label>
+            <mat-select [(ngModel)]="userService.currentUser.hmo" name="hmo">
+                <mat-option *ngFor="let x of hmo" [value]="x.code">
+                    {{x.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+    </p>
+    <p>
+        <input *ngIf="userForm.valid" type="button" value="Add a child" mat-raised-button
+            (click)="userService.addChild=!userService.addChild" />
+    </p>
+    <form *ngIf="userService.addChild" (ngSubmit)="saveChild(); childForm.reset(); userService.addChild=false;"
+        #childForm="ngForm">
+        <p>
+            <mat-form-field appearance="fill">
+                <mat-label>First-name</mat-label>
+                <input matInput id="fNameC" type="text" name="fName" required
+                    [(ngModel)]="userService.currentChild.firstName" #fNameC="ngModel">
+                <mat-hint *ngIf="fNameC.touched&&fNameC.errors" style="color: red;">required</mat-hint>
+            </mat-form-field>
+        </p>
+        <p>
+            <mat-form-field appearance="fill">
+                <mat-label>ID-number</mat-label>
+                <input matInput id="IdNumberC" type="text" name="IdNumberC" minlength="9" maxlength="9" required
+                    [(ngModel)]="userService.currentChild.idNumber" #idC="ngModel">
+                <mat-hint *ngIf="idC.touched&&idC.errors?.minlength" style="color: red;">ID number must be a 9
+                    digits.</mat-hint>
+                <mat-hint *ngIf="idC.touched&&idC.errors&&idC.errors?.required" style="color: red;">required
+                </mat-hint>
+            </mat-form-field>
+        </p>
+
+        <p>
+            <mat-form-field appearance="fill">
+                <mat-label>Date-of-birth</mat-label>
+                <input matInput id="dateOfBirthC" type="date" name="dateOfBirthC" required
+                    [(ngModel)]="userService.currentChild.dateOfBirth" #dC="ngModel" max="{{today|date:'dd-mm-yy'}}">
+                <mat-hint *ngIf="dC.touched&&dC.errors?.required" style="color: red;">required</mat-hint>
+                <mat-hint *ngIf="dC.touched&&dC.errors?.max" style="color: red;">Date is not valid</mat-hint>
+            </mat-form-field>
+        </p>
+
+        <input type="submit" value="save" [disabled]="!childForm.valid&&!userForm.valid" />
+    </form>
+    <!-- <div>
+        <button class="centre btn mc" [disabled]="!userForm.valid"
+            (click)="downloadExcel()">Download-form</button>
+    </div> -->
+    <input type="submit" class="centre btn mc" value="save" [disabled]="!userForm.valid" />
+</form>
