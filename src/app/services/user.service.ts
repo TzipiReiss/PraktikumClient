@@ -25,7 +25,4 @@ export class UserService {
   addUser(user: User) {
     return this.http.post<User>(`${this.baseRouteUrl}/User`, user);
   }
-  // addUserChild(c: Child) {
-  //   return this.http.post<Child>(`${this.baseRouteUrl}/Child`, c);
-  // }
 }
