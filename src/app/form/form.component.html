@@ -19,11 +19,13 @@
     <p>
         <mat-form-field appearance="fill">
             <mat-label>ID-number</mat-label>
-            <input matInput id="IdNumber" type="text" name="IdNumber" minlength="9" maxlength="9" required
+            <input matInput id="IdNumber" type="text" pattern="[1-9]+" name="IdNumber" minlength="9" maxlength="9" required
                 [(ngModel)]="userService.currentUser.idNumber" #id="ngModel">
-            <mat-hint *ngIf="id.touched&&id.errors?.minlength" style="color: red;">ID number must be a 9
-                digits.</mat-hint>
-            <mat-hint *ngIf="id.touched&&id.errors&&id.errors?.required" style="color: red;">required</mat-hint>
+            <mat-hint *ngIf="id.touched&&id.errors?.minlength&&!id.errors?.pattern" style="color: red;">ID number must
+                contain 9 digits.</mat-hint>
+            <mat-hint *ngIf="id.touched&&id.errors?.required" style="color: red;">required</mat-hint>
+            <mat-hint *ngIf="id.touched&&id.errors?.pattern" style="color: red;">An ID number can only
+                contain digits.</mat-hint>
         </mat-form-field>
     </p>
 
@@ -76,12 +78,14 @@
         <p>
             <mat-form-field appearance="fill">
                 <mat-label>ID-number</mat-label>
-                <input matInput id="IdNumberC" type="text" name="IdNumberC" minlength="9" maxlength="9" required
+                <input matInput id="IdNumberC" type="text" pattern="[1-9]+" name="IdNumberC" minlength="9" maxlength="9" required
                     [(ngModel)]="userService.currentChild.idNumber" #idC="ngModel">
-                <mat-hint *ngIf="idC.touched&&idC.errors?.minlength" style="color: red;">ID number must be a 9
+                <mat-hint *ngIf="idC.touched&&idC.errors?.minlength&&!idC.errors?.pattern" style="color: red;">ID number must contain 9
                     digits.</mat-hint>
-                <mat-hint *ngIf="idC.touched&&idC.errors&&idC.errors?.required" style="color: red;">required
+                <mat-hint *ngIf="idC.touched&&idC.errors?.required" style="color: red;">required
                 </mat-hint>
+               <mat-hint *ngIf="idC.touched&&idC.errors?.pattern" style="color: red;">An ID number can only
+                    contain digits.</mat-hint>
             </mat-form-field>
         </p>
 
