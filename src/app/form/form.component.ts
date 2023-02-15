@@ -34,8 +34,6 @@ export class FormComponent implements OnInit {
     this.userService.currentUser.children.push(this.userService.currentChild)
     this.userService.currentChild = new Child(0, null, null, null, 0);
     this.userService.addChild = false;
-    console.log(this.userService.currentUser)
-    console.log(this.userService.currentUser.children)
   }
 
   downloadExcel() {
@@ -45,19 +43,20 @@ export class FormComponent implements OnInit {
     //add name to sheet
     let worksheet1 = workbook1.addWorksheet("User");
     let worksheet2 = workbook1.addWorksheet("Children");
-    //add column name
+    //add a column name for user
     let header = ["first-name", "last-name", "date-of-birth", "id", "gender", "hmo"]
     worksheet1.addRow(header);
+    //add a column name for children
     header = ["first-name", "date-of-birth", "id"]
     worksheet2.addRow(header);
-
+    const u:User= this.userService.currentUser;
     let json_data_user = [{
-      "first-name": this.userService.currentUser.firstName,
-      "last-name": this.userService.currentUser.lastName,
-      "date-of-birth": this.userService.currentUser.dateOfBirth?.toLocaleString(),
-      "id": this.userService.currentUser.idNumber,
-      "gender": this.userService.currentUser?.gender == 1 ? 'male' : 'female',
-      "hmo": this.hmo[this.userService.currentUser.hmo]?.name
+      "first-name": u.firstName,
+      "last-name": u.lastName,
+      "date-of-birth": u.dateOfBirth?.toLocaleString(),
+      "id": u.idNumber,
+      "gender": u?.gender == 1 ? 'male' : 'female',
+      "hmo": this.hmo[u.hmo]?.name
     }
     ]
     let json_data_children = []
